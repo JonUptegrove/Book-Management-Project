@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="">
+<head>
+    <meta charset="UTF-8">
+    <title>Library Manager - Books</title>
+</head>
+<body>
+<h1>Library Book Inventory</h1>
+
+<!-- Table displaying database records -->
+<table border="1" cellpadding="10">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Title</th>
+        <th>Author</th>
+        <th>ISBN</th>
+        <th>Description</th>
+        <th>Stock</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="book : ${books}">
+        <td th:text="${book.id}">1</td>
+        <td th:text="${book.title}">Sample Title</td>
+        <td th:text="${book.author}">Sample Author</td>
+        <td th:text="${book.isbn}">000-000</td>
+        <td th:text="${book.description}">Sample Desc</td>
+        <td th:text="${book.stock}">0</td>
+    </tr>
+    </tbody>
+</table>
+
+
+<h2>Add a New Book</h2>
+<!-- Form to send data back to the database -->
+<form action="#" th:action="@{/books}" th:object="${newBook}" method="post">
+    <label>
+        <input type="text" th:field="*{title}" placeholder="Book Title" required />
+    </label><br><br>
+    <label>
+        <input type="text" th:field="*{author}" placeholder="Author Name" required />
+    </label><br><br>
+    <label>
+        <input type="text" th:field="*{isbn}" placeholder="ISBN Number" required />
+    </label><br><br>
+    <button type="submit">Save Book</button>
+</form>
+</body>
+</html>
