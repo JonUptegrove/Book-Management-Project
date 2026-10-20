@@ -2,7 +2,6 @@ package org.se4940project.library_manager.controller;
 
 import org.se4940project.library_manager.model.Book;
 import org.se4940project.library_manager.repository.BookRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,8 +14,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/books")
 public class BookController {
 
-    @Autowired
+    final
     BookRepository bookRepo;
+
+    public BookController(BookRepository bookRepo) {
+        this.bookRepo = bookRepo;
+    }
 
     // handle book display
     @GetMapping

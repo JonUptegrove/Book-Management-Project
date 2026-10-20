@@ -7,8 +7,8 @@
 <body>
 <h1>Library Book Inventory</h1>
 
-<!-- Table displaying database records -->
-<table border="1" cellpadding="10">
+<!-- Tables displaying database records -->
+<table>
     <thead>
     <tr>
         <th>ID</th>
@@ -31,8 +31,7 @@
     </tbody>
 </table>
 
-
-<h2>Add a New Book</h2>
+<h3>Add a New Book</h3>
 <!-- Form to send data back to the database -->
 <form action="#" th:action="@{/books}" th:object="${newBook}" method="post">
     <label>

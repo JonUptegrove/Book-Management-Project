@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Library Manager - User Records</title>
+</head>
+<body>
+
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Username</th>
+        <th>Password</th>
+        <th>Phone Number</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="member : ${members}">
+        <td th:text="${member.id}">1</td>
+        <td th:text="${member.firstName}">John</td>
+        <td th:text="${member.lastName}">Doe</td>
+        <td th:text="${member.username}">user1</td>
+        <td th:text="${member.password}">password123</td>
+        <td th:text="${member.phoneNumber}">1112223334</td>
+    </tr>
+    </tbody>
+</table>
+
+<h1>Add a New Member</h1>
+<!-- Form to send data back to the database -->
+<form action="#" th:action="@{/members}" th:object="${newMember}" method="post">
+    <label>
+        <input type="text" th:field="*{firstName}" placeholder="First Name" required />
+    </label><br><br>
+    <label>
+        <input type="text" th:field="*{lastName}" placeholder="Last Name" required />
+    </label><br><br>
+    <label>
+        <input type="text" th:field="*{phoneNumber}" placeholder="Phone Number" required />
+    </label><br><br>
+    <button type="submit">Save Member</button>
+</form>
+</body>
+</html>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Library Manager - Dashboard</title>
+  <style>
+    body { font-family: Arial, sans-serif; text-align: center; margin-top: 50px; }
+  .btn { display: inline-block; padding: 12px 24px; margin: 10px; background-color: #007bff; color: white; text-decoration: none; border-radius: 5px; font-weight: bold; }
+  .btn:hover { background-color: #0056b3; }
+  </style>
+</head>
+
+<body>
+<h1>Welcome to the Library Management System</h1>
+<p>Please select a section to manage:</p>
+
+<div>
+  <!-- Thymeleaf th:href dynamically resolves your application routes -->
+  <a class="btn" th:href="@{/books}">Manage Books</a>
+  <a class="btn" th:href="@{/members}">Manage Members</a>
+</div>
+</body>
+</html>
