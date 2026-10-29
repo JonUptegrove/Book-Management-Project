@@ -11,6 +11,10 @@
     <button type = "button"> <- Back to Home</button>
 </a>
 
+<a href = "/cart">
+    <button type = "button"> View Shopping Cart</button>
+</a>
+
 <!-- Tables displaying database records -->
 <table>
     <thead>
@@ -31,6 +35,12 @@
         <td th:text="${book.isbn}">000-000</td>
         <td th:text="${book.description}">Sample Desc</td>
         <td th:text="${book.stock}">0</td>
+
+        <td>
+            <form th:action="@{/cart/add/{id}(id=${book.id})}" method="post">
+                <button type="submit">Add to Cart</button>
+            </form>
+        </td>
     </tr>
     </tbody>
 </table>

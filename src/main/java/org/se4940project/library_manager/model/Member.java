@@ -16,4 +16,6 @@ public class Member {
     private String password;
     private String phoneNumber;
 
+    private int shoppingCartId;
+
 }

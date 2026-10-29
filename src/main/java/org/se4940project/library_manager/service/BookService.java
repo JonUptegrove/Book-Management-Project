@@ -16,6 +16,9 @@ public class BookService {
     public List<Book> getBooks() {
         return bookRepo.findAll();
     }
+    public Book getBookById(Long id) {
+        return bookRepo.findById(id).orElse(null);
+    }
     // save or update book
     public void saveBook(Book book) {
         bookRepo.save(book);

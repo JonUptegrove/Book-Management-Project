@@ -9,11 +9,11 @@ public class Book {
 
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
-        private int id;
+        private Long id;
 
         private String title;
         private String author;
-        private double isbn;
+        private String isbn;
         private String description;
         private int stock;
 
