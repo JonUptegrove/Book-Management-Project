@@ -12,10 +12,12 @@ public class BookService {
     @Autowired
     private BookRepository bookRepo;
 
-    // retrieve books
+    // retrieve all books
     public List<Book> getBooks() {
         return bookRepo.findAll();
     }
+
+    // find book by id
     public Book getBookById(Long id) {
         return bookRepo.findById(id).orElse(null);
     }

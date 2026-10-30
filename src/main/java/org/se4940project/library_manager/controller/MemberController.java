@@ -17,12 +17,12 @@ public class MemberController {
     @Autowired
     private MemberService memberService;
 
-    // handle user display
+        // handle user display
         @GetMapping
         public String listMember (Model model) {
             model.addAttribute("members", memberService.getMembers());
             model.addAttribute("newMember", new Member());
-            return "members"; // Looks for books.html in templates
+            return "members"; // Looks for members.html in templates
         }
         // handle member additions
         @PostMapping
