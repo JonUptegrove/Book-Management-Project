@@ -1,0 +1,170 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - BookMarket</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f5f6f5;
+        }
+
+        /* Navigation */
+        .navbar {
+            background: white;
+            padding: 18px 35px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .logo {
+            color: #238636;
+            font-size: 25px;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        /* Login container */
+        .login-container {
+            width: 100%;
+            max-width: 420px;
+            margin: 80px auto;
+            padding: 35px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+        }
+
+        .login-container h1 {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #777;
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 13px;
+            border: 1px solid #ccc;
+            border-radius: 7px;
+            font-size: 15px;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #238636;
+        }
+
+        .login-button {
+            width: 100%;
+            padding: 13px;
+            background: #238636;
+            color: white;
+            border: none;
+            border-radius: 7px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .login-button:hover {
+            background: #196c2c;
+        }
+
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: #238636;
+            text-decoration: none;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 500px) {
+            .login-container {
+                margin: 40px 15px;
+                width: auto;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- Navigation -->
+<nav class="navbar">
+    <a href="/books" class="logo">BookMarket</a>
+</nav>
+
+<!-- Login form -->
+<div class="login-container">
+
+    <h1>Welcome Back!</h1>
+
+    <p class="subtitle">
+        Login to your BookMarket account.
+    </p>
+
+    <form onsubmit="event.preventDefault(); alert('Login functionality is coming soon!');">
+
+        <div class="form-group">
+            <label for="username">Username</label>
+
+            <input
+                    type="text"
+                    id="username"
+                    name="username"
+                    placeholder="Enter your username"
+                    required>
+        </div>
+
+        <div class="form-group">
+            <label for="password">Password</label>
+
+            <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    placeholder="Enter your password"
+                    required>
+        </div>
+
+        <button type="submit" class="login-button">
+            Login
+        </button>
+
+    </form>
+
+    <a href="/books" class="back-link">
+        Back to Marketplace
+    </a>
+
+</div>
+
+</body>
+</html>
