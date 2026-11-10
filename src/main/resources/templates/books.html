@@ -46,6 +46,16 @@
             white-space: nowrap;
         }
 
+        .book-add-btn {
+            background: #238636;
+            color: white;
+            text-decoration: none;
+            padding: 11px 22px;
+            border-radius: 7px;
+            font-weight: bold;
+            white-space: nowrap;
+        }
+
         .search-container {
             flex: 1;
             max-width: 650px;
@@ -213,6 +223,10 @@
         Login
     </a>
 
+    <a href="/books/add" class="book-add-button">
+        Add Book
+    </a>
+
 </nav>
 
 <!-- Marketplace content -->
@@ -257,12 +271,6 @@
                      th:text="${book.author}">
                     Author
                 </div>
-
-                <span class="book-condition"
-                      th:text="${book.bookCondition != null ? book.bookCondition : 'Condition unspecified'}">
-                    Good
-                </span>
-
             </div>
 
         </a>

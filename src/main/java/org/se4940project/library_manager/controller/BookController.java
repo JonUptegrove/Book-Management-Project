@@ -22,24 +22,34 @@ public class BookController {
         model.addAttribute("newBook", new Book());
         return "books"; // Looks for books.html in templates
     }
+
     // handle book additions
-    @PostMapping
+    @GetMapping("/add")
+    public String showAddBookForm(Model model) {
+        model.addAttribute("book", new Book());
+        return "book-add"; // Looks for add-book.html
+    }
+
+    // Process the form submission
+    @PostMapping("/save")
     public String saveBook(@ModelAttribute Book book) {
         bookService.saveBook(book);
         return "redirect:/books";
     }
-    // Display an individual book
-    @GetMapping("/{id}")
-    public String viewBook(@PathVariable Long id, Model model) {
 
-        Book book = bookService.getBookById(id);
+        // Display an individual book
+        @GetMapping("/{id}")
+        public String viewBook (@PathVariable Long id, Model model){
 
-        if (book == null) {
-            return "redirect:/books";
-        }
+            Book book = bookService.getBookById(id);
 
-        model.addAttribute("book", book);
+            if (book == null) {
+                return "redirect:/books";
+            }
 
-        return "book-details";
+            model.addAttribute("book", book);
+
+            return "book-details";
+
     }
 }
