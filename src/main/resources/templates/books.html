@@ -168,15 +168,6 @@
             margin-bottom: 10px;
         }
 
-        .book-condition {
-            display: inline-block;
-            background: #e7f3e8;
-            color: #238636;
-            padding: 5px 9px;
-            border-radius: 5px;
-            font-size: 12px;
-        }
-
         .empty-message {
             color: #777;
             margin-top: 30px;
@@ -219,13 +210,29 @@
                 oninput="searchBooks()">
     </div>
 
-    <a href="/login" class="login-btn">
+    <!-- Show Login button if NOT logged in -->
+    <a th:if="${session.loggedInUser == null}" href="/login" class="login-btn">
         Login
     </a>
 
-    <a href="/books/add" class="book-add-button">
-        Add Book
-    </a>
+    <!-- Show User Panel, Add Book (if admin), and Logout if logged in -->
+    <div th:if="${session.loggedInUser != null}" style="display: flex; align-items: center; gap: 15px;">
+
+        <!-- Optional: Greeting -->
+        <span th:text="${'Hi, ' + session.loggedInUser.username}" style="font-weight: bold; font-size: 14px; color: #333;"></span>
+
+        <!-- Add New Book button  -->
+        <a th:if="${session.loggedInUser.role == 'ADMIN'}"
+           th:href="@{/books/add}"
+           style="background: #007bff; color: white; text-decoration: none; padding: 10px 15px; border-radius: 7px; font-weight: bold; font-size: 14px; white-space: nowrap;">
+            Add New Book
+        </a>
+
+        <!-- Logout button -->
+        <a href="/logout" class="login-btn" style="background: #d73a49;">
+            Logout
+        </a>
+    </div>
 
 </nav>
 

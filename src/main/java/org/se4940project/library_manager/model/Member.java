@@ -15,6 +15,7 @@ public class Member {
     private String username;
     private String password;
     private String phoneNumber;
+    private String role;
 
     private int shoppingCartId;
 

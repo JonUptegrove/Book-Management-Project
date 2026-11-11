@@ -19,6 +19,7 @@
         <th>Username</th>
         <th>Password</th>
         <th>Phone Number</th>
+        <th>Role</th>
     </tr>
     </thead>
     <tbody>
@@ -29,6 +30,7 @@
         <td th:text="${member.username}">user1</td>
         <td th:text="${member.password}">password123</td>
         <td th:text="${member.phoneNumber}">1112223334</td>
+        <td th:text="${member.role}">User</td>
     </tr>
     </tbody>
 </table>
@@ -43,7 +45,16 @@
         <input type="text" th:field="*{lastName}" placeholder="Last Name" required />
     </label><br><br>
     <label>
+        <input type="text" th:field="*{username}" placeholder="Username" required />
+    </label><br><br>
+    <label>
+        <input type="text" th:field="*{password}" placeholder="Password" required />
+    </label><br><br>
+    <label>
         <input type="text" th:field="*{phoneNumber}" placeholder="Phone Number" required />
+    </label><br><br>
+    <label>
+        <input type="text" th:field="*{role}" placeholder="Role" required />
     </label><br><br>
     <button type="submit">Save Member</button>
 </form>

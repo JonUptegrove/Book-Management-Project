@@ -22,4 +22,15 @@ public class MemberService {
     public void saveMember(Member member) {
         memberRepo.save(member);
     }
+
+    // check login credentials
+    public Member authenticate(String username, String password){
+        Member member = memberRepo.findByUsername(username).orElse(null);
+        if(member != null) {
+            if (member.getPassword().equals(password)) {
+                return member; // login successful
+            }
+        }
+        return null; // login failed
+    }
 }
