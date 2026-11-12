@@ -1,0 +1,156 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Details - BookMarket</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f5f6f5;
+            color: #222;
+        }
+
+        .navbar {
+            background: white;
+            padding: 18px 35px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .logo {
+            color: #238636;
+            font-size: 24px;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 50px auto;
+            padding: 30px;
+            background: white;
+            border-radius: 12px;
+            display: flex;
+            gap: 40px;
+        }
+
+        .book-image {
+            width: 300px;
+            height: 380px;
+            object-fit: contain;
+            background: #eee;
+            border-radius: 8px;
+        }
+
+        .details {
+            flex: 1;
+        }
+
+        .price {
+            color: #238636;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .back {
+            color: #238636;
+            text-decoration: none;
+        }
+
+        button {
+            background: #238636;
+            color: white;
+            padding: 13px 25px;
+            border: none;
+            border-radius: 7px;
+            cursor: pointer;
+            font-size: 15px;
+        }
+
+        button:hover {
+            background: #196c2c;
+        }
+
+        @media (max-width: 650px) {
+            .container {
+                flex-direction: column;
+                margin: 20px;
+            }
+
+            .book-image {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<nav class="navbar">
+    <a href="/books" class="logo">BookMarket</a>
+</nav>
+
+<div class="container">
+
+    <img th:if="${book.imageUrl != null and !#strings.isEmpty(book.imageUrl)}"
+         th:src="${book.imageUrl}"
+         th:alt="${book.title}"
+         class="book-image">
+
+    <div th:unless="${book.imageUrl != null and !#strings.isEmpty(book.imageUrl)}"
+         class="book-image"
+         style="display:flex; align-items:center; justify-content:center;">
+        Book Cover
+    </div>
+
+    <div class="details">
+
+        <h1 th:text="${book.title}">Book Title</h1>
+
+        <h3 th:text="${'By ' + book.author}">Author</h3>
+
+        <p class="price"
+           th:text="${book.price != null ? '$' + #numbers.formatDecimal(book.price, 1, 2) : 'Price unavailable'}">
+            $0.00
+        </p>
+
+        <p>
+            <strong>ISBN:</strong>
+            <span th:text="${book.isbn}"></span>
+        </p>
+
+        <p>
+            <strong>Available:</strong>
+            <span th:text="${book.stock}"></span>
+        </p>
+
+        <h3>Description</h3>
+
+        <p th:text="${book.description}">
+            Book description goes here.
+        </p>
+
+        <form th:action="@{/cart/add/{id}(id=${book.id})}"
+              method="post">
+            <button type="submit"
+                    th:disabled="${book.stock <= 0}">
+                Add to Cart
+            </button>
+        </form>
+
+        <br><br>
+
+        <a href="/books" class="back">
+            Back to Marketplace
+        </a>
+
+    </div>
+
+</div>
+
+</body>
+</html>

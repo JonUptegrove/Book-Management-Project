@@ -1,0 +1,397 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>BookMarket - Checkout</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f5f6f5;
+            color: #222;
+        }
+
+        /* Navigation */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 18px 45px;
+            background: white;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .logo {
+            color: #238636;
+            font-size: 26px;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .checkout-title {
+            font-size: 19px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .back-link {
+            color: #238636;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        /* Main Layout */
+        .checkout-container {
+            max-width: 1250px;
+            margin: 35px auto;
+            padding: 0 25px;
+        }
+
+        .page-title {
+            margin-bottom: 25px;
+        }
+
+        .page-title h1 {
+            margin-bottom: 8px;
+            font-size: 28px;
+        }
+
+        .page-title p {
+            color: #777;
+        }
+
+        .checkout-layout {
+            display: grid;
+            grid-template-columns: 1fr 350px;
+            gap: 25px;
+            align-items: start;
+        }
+
+        /* Shopping Cart */
+        .cart-section {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+        }
+
+        .section-heading {
+            font-size: 21px;
+            margin-top: 0;
+            margin-bottom: 20px;
+        }
+
+        .cart-item {
+            display: flex;
+            gap: 22px;
+            padding: 22px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .book-image {
+            width: 115px;
+            height: 150px;
+            object-fit: contain;
+            background: #f0f2f0;
+            border-radius: 5px;
+        }
+
+        .placeholder {
+            width: 115px;
+            height: 150px;
+            background: #e9eee9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #238636;
+            font-weight: bold;
+            border-radius: 5px;
+        }
+
+        .book-details {
+            flex: 1;
+        }
+
+        .book-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .book-author {
+            color: #777;
+            margin-bottom: 15px;
+        }
+
+        .book-price {
+            font-size: 19px;
+            font-weight: bold;
+            color: #238636;
+            white-space: nowrap;
+        }
+
+        /* Empty Cart */
+        .empty-cart {
+            text-align: center;
+            padding: 40px 15px;
+            color: #777;
+        }
+
+        /* Order Summary */
+        .order-summary {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+            position: sticky;
+            top: 25px;
+        }
+
+        .summary-title {
+            font-size: 21px;
+            margin-top: 0;
+            margin-bottom: 22px;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            color: #555;
+            font-size: 15px;
+        }
+
+        .summary-total {
+            display: flex;
+            justify-content: space-between;
+            border-top: 1px solid #ddd;
+            padding-top: 18px;
+            margin-top: 20px;
+            font-size: 20px;
+            font-weight: bold;
+            color: #238636;
+        }
+
+        .place-order-btn {
+            display: block;
+            width: 100%;
+            padding: 14px;
+            margin-top: 25px;
+            background: #238636;
+            color: white;
+            border: none;
+            border-radius: 7px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .place-order-btn:hover {
+            background: #196c2c;
+        }
+
+        .secure-message {
+            text-align: center;
+            color: #777;
+            font-size: 13px;
+            margin-top: 15px;
+        }
+
+        .continue-shopping {
+            display: inline-block;
+            margin-top: 20px;
+            color: #238636;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        @media (max-width: 800px) {
+            .checkout-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .order-summary {
+                position: static;
+            }
+
+            .navbar {
+                padding: 15px 20px;
+            }
+        }
+
+        @media (max-width: 500px) {
+            .checkout-title {
+                display: none;
+            }
+
+            .cart-item {
+                flex-wrap: wrap;
+            }
+
+            .book-price {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- Navigation -->
+<nav class="navbar">
+
+    <a href="/books" class="logo">BookMarket</a>
+
+    <span class="checkout-title">Checkout</span>
+
+    <a href="/books" class="back-link">
+        Continue Shopping
+    </a>
+
+</nav>
+
+<!-- Main Checkout Content -->
+<main class="checkout-container">
+
+    <div class="page-title">
+        <h1>Review Your Order</h1>
+        <p>Check your books and order total before placing your order.</p>
+    </div>
+
+    <div class="checkout-layout">
+
+        <!-- Shopping Cart Items -->
+        <section class="cart-section">
+
+            <h2 class="section-heading">Your Shopping Cart</h2>
+
+            <!-- Empty Cart Message -->
+            <div th:if="${#lists.isEmpty(cartBooks)}"
+                 class="empty-cart">
+
+                <h3>Your cart is empty</h3>
+
+                <p>Browse our marketplace to find your next book.</p>
+
+                <a href="/books" class="continue-shopping">
+                    Browse Books
+                </a>
+
+            </div>
+
+            <!-- Display Books -->
+            <div th:each="book : ${cartBooks}" class="cart-item">
+
+                <!-- Book Cover -->
+                <img th:if="${book.imageUrl != null
+                    and !#strings.isEmpty(book.imageUrl)}"
+                     th:src="${book.imageUrl}"
+                     th:alt="${book.title}"
+                     class="book-image">
+
+                <!-- Placeholder if no image -->
+                <div th:unless="${book.imageUrl != null
+                    and !#strings.isEmpty(book.imageUrl)}"
+                     class="placeholder">
+
+                    Book Cover
+
+                </div>
+
+                <!-- Book Information -->
+                <div class="book-details">
+
+                    <div class="book-title"
+                         th:text="${book.title}">
+                        Book Title
+                    </div>
+
+                    <div class="book-author"
+                         th:text="${'By ' + book.author}">
+                        By Author
+                    </div>
+
+                </div>
+
+                <!-- Book Price -->
+                <div class="book-price"
+                     th:text="${'$' + #numbers.formatDecimal(book.price, 1, 2)}">
+
+                    $0.00
+
+                </div>
+
+            </div>
+
+            <a href="/books" class="continue-shopping">
+                ← Continue Shopping
+            </a>
+
+        </section>
+
+        <!-- Order Summary -->
+        <aside class="order-summary">
+
+            <h2 class="summary-title">Order Summary</h2>
+
+            <div class="summary-row">
+
+                <span>Subtotal</span>
+
+                <span th:text="${'$' + #numbers.formatDecimal(subtotal, 1, 2)}">
+                    $0.00
+                </span>
+
+            </div>
+
+            <div class="summary-row">
+
+                <span>Shipping</span>
+
+                <span th:text="${shippingCost == 0 ? 'FREE' :
+                    '$' + #numbers.formatDecimal(shippingCost, 1, 2)}">
+                    FREE
+                </span>
+
+            </div>
+
+            <div class="summary-total">
+
+                <span>Order Total</span>
+
+                <span th:text="${'$' + #numbers.formatDecimal(orderTotal, 1, 2)}">
+                    $0.00
+                </span>
+
+            </div>
+
+            <button type="button"
+                    class="place-order-btn"
+                    th:disabled="${#lists.isEmpty(cartBooks)}">
+
+                Place Your Order
+
+            </button>
+
+            <p class="secure-message">
+                Secure checkout with BookMarket
+            </p>
+
+        </aside>
+
+    </div>
+
+</main>
+
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add New Book - Library Manager</title>
+</head>
+<body>
+<h1>Add a New Book</h1>
+
+<form th:action="@{/books/save}" th:object="${book}" method="post">
+    <div>
+        <label>Title:</label><br>
+        <input type="text" th:field="*{title}" required />
+    </div>
+    <br>
+    <div>
+        <label>Author:</label><br>
+        <input type="text" th:field="*{author}" required />
+    </div>
+    <br>
+    <div>
+        <label>ISBN:</label><br>
+        <input type="text" th:field="*{isbn}" required />
+    </div>
+    <br>
+    <div>
+        <label>Description:</label><br>
+        <textarea th:field="*{description}"></textarea>
+    </div>
+    <br>
+    <div>
+        <label>Stock:</label><br>
+        <input type="number" th:field="*{stock}" required />
+    </div>
+    <br>
+    <div>
+        <label>Price:</label><br>
+        <input type="number" th:field="*{price}" required />
+    </div>
+    <br>
+    <button type="submit">Save Book</button>
+</form>
+
+<br>
+<a th:href="@{/books}">Back to Book Inventory</a>
+</body>
+</html>
