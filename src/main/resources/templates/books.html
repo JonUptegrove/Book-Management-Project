@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
@@ -228,8 +227,6 @@
 
     </div>
 
-    <a href="/books" class="browse">Browse</a>
-
     <div class="search-container">
         <input
                 type="text"
@@ -250,17 +247,6 @@
 
     <!-- Show User Panel, Add Book (if admin), and Logout if logged in -->
     <div th:if="${session.loggedInUser != null}" style="display: flex; align-items: center; gap: 15px;">
-
-        <!-- Optional: Greeting -->
-        <span th:text="${'Hi, ' + session.loggedInUser.username}" style="font-weight: bold; font-size: 14px; color: #333;"></span>
-
-<!--        &lt;!&ndash; Add New Book button  &ndash;&gt;-->
-<!--        <a th:if="${session.loggedInUser.role == 'ADMIN'}"-->
-<!--           th:href="@{/books/add}"-->
-<!--           style="background: #007bff; color: white; text-decoration: none; padding: 10px 15px; border-radius: 7px; font-weight: bold; font-size: 14px; white-space: nowrap;">-->
-<!--            Add New Book-->
-<!--        </a>-->
-
         <!-- Logout button -->
         <a href="/logout" class="login-btn" style="background: #d73a49;">
             Logout

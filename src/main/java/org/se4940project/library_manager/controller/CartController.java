@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import java.math.BigDecimal;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/cart")
@@ -20,17 +22,30 @@ public class CartController {
     // View the cart webpage
     @GetMapping
     public String viewCart(Model model) {
-        model.addAttribute("cartBooks", cart.getBooks());
-        return "cart"; // Looks for cart.html
-    }
-    // View the checkout webpage
-    @GetMapping("/checkout")
-    public String checkout(Model model) {
+            BigDecimal subtotal = BigDecimal.ZERO;
 
-        model.addAttribute("cartBooks", cart.getBooks());
-        model.addAttribute("quantities", cart.getQuantities());
+            for (Book book : cart.getBooks()) {
 
-        return "checkout";
+                int quantity = cart.getQuantity(book.getId());
+
+                BigDecimal bookTotal = book.getPrice()
+                        .multiply(BigDecimal.valueOf(quantity));
+
+                subtotal = subtotal.add(bookTotal);
+            }
+
+            BigDecimal shippingCost = BigDecimal.ZERO;
+
+            BigDecimal orderTotal = subtotal.add(shippingCost);
+
+            model.addAttribute("cartBooks", cart.getBooks());
+            model.addAttribute("quantities", cart.getQuantities());
+
+            model.addAttribute("subtotal", subtotal);
+            model.addAttribute("shippingCost", shippingCost);
+            model.addAttribute("orderTotal", orderTotal);
+
+            return "cart";
     }
 
     // Add a book to the cart
@@ -47,7 +62,7 @@ public class CartController {
     @PostMapping("/remove/{id}")
     public String removeFromCart(@PathVariable Long id) {
         cart.removeBook(id);
-        return "redirect:/cart/checkout";
+        return "redirect:/cart";
     }
 
     // Clear all books from the cart
@@ -65,6 +80,54 @@ public class CartController {
 
         cart.setQuantity(id, quantity);
 
-        return "redirect:/cart/checkout";
+        return "redirect:/cart";
+    }
+    // Navigate to payment page
+    @GetMapping("/payment")
+    public String payment(Model model) {
+
+        BigDecimal subtotal = BigDecimal.ZERO;
+
+        for (Book book : cart.getBooks()) {
+
+            int quantity = cart.getQuantity(book.getId());
+
+            subtotal = subtotal.add(
+                    book.getPrice().multiply(BigDecimal.valueOf(quantity))
+            );
+        }
+
+        if (cart.getBooks().isEmpty()) {
+            return "redirect:/cart";
+        }
+
+        BigDecimal shippingCost = BigDecimal.ZERO;
+        BigDecimal orderTotal = subtotal.add(shippingCost);
+
+        model.addAttribute("subtotal", subtotal);
+        model.addAttribute("shippingCost", shippingCost);
+        model.addAttribute("orderTotal", orderTotal);
+
+        return "payment";
+    }
+    @PostMapping("/purchase")
+    public String completePurchase() {
+
+        // Prevent purchasing with an empty cart
+        if (cart.getBooks().isEmpty()) {
+            return "redirect:/cart";
+        }
+
+        // Clear the session cart
+        cart.clear();
+
+        // Display confirmation page
+        return "redirect:/cart/confirmation";
+    }
+
+
+    @GetMapping("/confirmation")
+    public String showConfirmation() {
+        return "confirmation";
     }
 }

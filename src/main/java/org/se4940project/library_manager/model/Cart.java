@@ -26,7 +26,7 @@ public class Cart {
         else{
             Long id = book.getId();
 
-            quantities.put(id, quantities.get(id) + 1);
+            quantities.put(id, quantities.getOrDefault(id, 0) + 1);
         }
     }
 

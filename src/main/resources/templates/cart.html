@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 
@@ -242,6 +241,19 @@
                 width: 100%;
             }
         }
+        .remove-button {
+            background: none;
+            border: none;
+            color: #dc3545;
+            font-size: 20px;
+            cursor: pointer;
+            padding: 8px;
+            transition: color 0.2s;
+        }
+
+        .remove-button:hover {
+            color: #a71d2a;
+        }
     </style>
 </head>
 
@@ -321,21 +333,57 @@
                         By Author
                     </div>
 
+                    <!-- Quantity Selector -->
+                    <form th:action="@{/cart/quantity/{id}(id=${book.id})}"
+                          method="post"
+                          style="display: flex; align-items: center; gap: 10px; margin-top: 15px;">
+
+                        <label th:for="${'quantity-' + book.id}">
+                            Quantity:
+                        </label>
+
+                        <input type="number"
+                               th:id="${'quantity-' + book.id}"
+                               name="quantity"
+                               th:value="${quantities[book.id]}"
+                               min="1"
+                               required
+                               style="width: 65px; padding: 7px; border: 1px solid #ccc; border-radius: 5px;">
+
+                        <button type="submit">
+                            Update
+                        </button>
+
+                    </form>
+
                 </div>
 
                 <!-- Book Price -->
                 <div class="book-price"
-                     th:text="${'$' + #numbers.formatDecimal(book.price, 1, 2)}">
+                     th:text="${'$' + #numbers.formatDecimal(book.price * quantities[book.id], 1, 2)}">
 
                     $0.00
 
                 </div>
+                <!-- Remove Book Button -->
+                <form th:action="@{/cart/remove/{id}(id=${book.id})}"
+                      method="post">
 
-            </div>
+                    <button type="submit"
+                            class="remove-button"
+                            title="Remove book"
+                            aria-label="Remove book from cart">
+
+                        &#128465;
+
+                    </button>
+
+                </form>
 
             <a href="/books" class="continue-shopping">
                 ← Continue Shopping
             </a>
+        </div>
 
         </section>
 
@@ -375,13 +423,14 @@
 
             </div>
 
-            <button type="button"
-                    class="place-order-btn"
-                    th:disabled="${#lists.isEmpty(cartBooks)}">
+            <a href="/cart/payment"
+               class="place-order-btn"
+               th:if="${!#lists.isEmpty(cartBooks)}"
+               style="text-align: center; text-decoration: none;">
 
-                Place Your Order
+                Proceed to Payment
 
-            </button>
+            </a>
 
             <p class="secure-message">
                 Secure checkout with BookMarket
